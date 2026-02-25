@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 15</title>
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">
+
+<style>
+    p{
+        margin-right: 5px;
+    }
+    button{
+        background-color: rgb(216, 154, 165);
+    }
+    button:hover{
+        background-color: rgb(149, 91, 101);
+        color:rgb(255, 226, 231);
+    }
+    input{
+        display:inline-block;
+    }
+    input[type="text"]:hover{
+        margin-left: 5px;
+        background-color: rgb(248, 192, 202);
+    }
+    .container{
+        border-radius: 2px;
+        background-color: rgb(247, 204, 211);
+        width: 280px;
+    }
+    input[type="radio"]:checked{
+        accent-color: rgb(149, 91, 101);   
+    }
+    input[type="checkbox"]:checked{
+        accent-color: rgb(149, 91, 101);    
+    }
+</style> 
+
+    <h1>Bitácora de préstamo de equipos</h1>
+    <p><div class="container">Nombre:</div> <input type="text"></p>
+
+    <p><p><div class="container"><label>Carrera: </label></div> </p>
+        <input type="radio" name="x" value="c" /> <label for="c"> C </label>
+        <input type="radio" name="x" value="g" /> <label for="g"> G </label>
+        <input type="radio" name="x" value="s" /> <label for="c"> S </label>
+        <input type="radio" name="x" value="ip"/> <label for="c"> IP </label>
+        <input type="radio" name="x" value="in"/> <label for="in"> IN </label>
+    </p>
+
+    <p><div class="container">Grupo:</div> <input type="text"></p>
+
+    <p><p><div class="container"><label>Alumno / Profesor </label></div></p>
+            <input type="checkbox" value="a"> A 
+            <input type="checkbox" value="p"> P 
+    </p>
+   
+        <p><div class="container">Préstamo:</div> <input type="text"></p>
+    
+        <p>
+            <div class="container">
+                <label>Hora de préstamo: </label>  
+            </div>
+            <p>Fecha: <input type="text"></p>
+            <p>Hora: <input type="text"></p>
+            <p>Firma: <input type="text"></p>
+        </p>
+   
+
+    <p>
+        <div class="container">
+            <label>Hora de entrega: </label> 
+        </div>
+        <p>Fecha: <input type="text"></p>
+        <p>Hora: <input type="text"></p>
+        <p>Firma: <input type="text"></p>
+    </p>
+
+    <p><button> Enviar </button></p>
+</body>
+</html>
