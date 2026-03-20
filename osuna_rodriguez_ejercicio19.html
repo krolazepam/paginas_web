@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Practica 19 </title>
+
+    <style>
+        #cuadro { 
+            background: rgb(249, 181, 192); 
+            border:1px solid #982f4a; 
+            padding:2rem 3rem;
+            border-radius:8px; 
+            text-align:center; 
+            color: rgb(255, 235, 239);
+            width: 600px;
+        }
+        h1 { 
+            color: #982f4a; 
+        }
+        h2{
+            color: #f44462;
+        }
+	body{
+	    display: flex;
+  	    flex-direction: column;
+  	    align-items: center;
+  	    justify-content: center;
+	}
+    </style>
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">    
+<p id="cuadro">
+
+    <p id="nombre"></p> 
+    <script>
+        document.getElementById("nombre").innerHTML = "<h2>Osuna Rodriguez Anna Karol</h2>";
+    </script>
+
+    <p id="grupo"></p>
+    <script>
+        document.getElementById("grupo").innerText = "Grupo: 302";
+    </script>
+
+    <script>
+        document.write("Carrera: Ingenieria en Software");
+    </script>
+
+    <script>
+        window.alert("Información");
+    </script>
+
+</p>
+</body>
+</html>
