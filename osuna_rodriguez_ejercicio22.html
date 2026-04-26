@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 22</title>
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">
+
+<style>
+    p{
+        margin-right: 5px;
+    }
+    button{
+        background-color: rgb(216, 154, 165);
+    }
+    button:hover{
+        background-color: rgb(149, 91, 101);
+        color:rgb(255, 226, 231);
+    }
+    input{
+        display:inline-block;
+    }
+    input[type="text"]:hover{
+        margin-left: 5px;
+        background-color: rgb(248, 192, 202);
+    }
+    .container{
+        border-radius: 2px;
+        background-color: rgb(247, 204, 211);
+        width: 280px;
+    }
+    input[type="radio"]:checked{
+        accent-color: rgb(149, 91, 101);   
+    }
+</style> 
+
+    <h1>Práctica 22</h1>
+
+    <p>
+        <div class="container">
+            <label>Variables: </label> 
+        </div>
+        <p>A: <input id="a" type="text"></p>
+        <p>B: <input id="b" type="text"></p>
+        <p>C: <input id="c" type="text"></p>
+    </p>
+
+    <script>
+        function formula() {
+            const a = parseFloat(document.getElementById("a").value);
+            const b = parseFloat(document.getElementById("b").value);
+            const c = parseFloat(document.getElementById("c").value);
+
+            const discriminante = Math.pow(b, 2) - (4 * a * c);
+
+            if (discriminante < 0) {
+                alert("La ecuación no tiene soluciones reales (La raíz es negativa).");
+            } else {
+                const x1 = (-b + Math.sqrt(discriminante)) / (2 * a);
+                const x2 = (-b - Math.sqrt(discriminante)) / (2 * a);
+
+                alert("El valor de x1 es: " + x1 + "\nEl valor de x2 es: " + x2);
+            }
+        }
+    </script>
+
+    <p><button onclick="formula()"> Calcular </button></p>
+</body>
+</html>
