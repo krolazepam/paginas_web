@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 20</title>
+
+<style>
+    p{
+        margin-right: 5px;
+    }
+    h1{
+        color: rgb(201, 113, 129);
+    }
+    .container{
+        border-radius: 2px;
+        background-color: rgb(247, 210, 216);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+        width: 300px;
+    }
+    #demo{
+        color: rgb(202, 133, 146);
+        font-size: medium;
+        line-height: 1.6; /* Espaciado entre líneas */
+        text-align: left;
+        width: 100%;
+    }
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+</style> 
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">
+
+<div class="container">
+    <h1> Practica 20 </h1>
+    <p id="demo"></p>
+    <script>
+        let x = 5;
+        let y = 2;
+
+        let suma = x + y;
+        let resta = x - y;
+        let div = x / y;
+        let multi = x * y;
+
+        document.getElementById("demo").innerHTML = `
+            <strong>Variables:</strong><br>
+            <strong>Número 1: </strong> ${x} <br>
+            <strong>Número 2: </strong> ${y} <br>
+            <br>
+            <strong>Suma:</strong> ${suma} <br>
+            <strong>Resta:</strong> ${resta} <br>
+            <strong>División:</strong> ${div} <br>
+            <strong>Multiplicación:</strong> ${multi}
+        `;
+    </script>
+</div>
+
+</body>
+</html>
