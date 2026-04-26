@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 23</title>
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">
+
+<style>
+    p{
+        margin-right: 5px;
+    }
+    button{
+        background-color: rgb(216, 154, 165);
+    }
+    button:hover{
+        background-color: rgb(149, 91, 101);
+        color:rgb(255, 226, 231);
+    }
+    input{
+        display:inline-block;
+    }
+    input[type="text"]:hover{
+        margin-left: 5px;
+        background-color: rgb(248, 192, 202);
+    }
+    .container{
+        border-radius: 2px;
+        background-color: rgb(247, 204, 211);
+        width: 280px;
+        font-size: large;
+    }
+    input[type="radio"]:checked{
+        accent-color: rgb(149, 91, 101);   
+    }
+</style> 
+
+    <h1>Práctica 23</h1>
+
+    <p>
+        <div class="container">
+            <label>Inserte sus datos: </label> 
+        </div>
+        <p>Peso (En kilogramos): <input id="p" type="text"></p>
+        <p>Altura (En metros): <input id="a" type="text"></p>
+    </p>
+
+    <script>
+        function calcularIMC() {
+            const a = parseFloat(document.getElementById("a").value);
+            const peso = parseFloat(document.getElementById("p").value);
+
+            const altura = a * a;
+            const imc = peso / altura; 
+
+            let cl;
+
+            if (imc < 18.5){
+                cl = "Peso bajo";
+            }
+            else if (imc > 18.5 && imc < 24.9){
+                cl = "Peso normal";
+            }
+            else if (imc > 25 && imc < 29.9){
+                cl = "Sobrepeso";
+            }
+            else if (imc > 30){
+                cl = "Obesidad";
+            }
+
+            alert("IMC: " + imc + "\nClasificación: " + cl);
+        }
+    </script>
+
+    <p><button onclick="calcularIMC()"> Calcular </button></p>
+</body>
+</html>
