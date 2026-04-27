@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 24</title>
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">
+
+<style>
+    p{
+        margin-right: 5px;
+    }
+    button{
+        background-color: rgb(216, 154, 165);
+    }
+    button:hover{
+        background-color: rgb(149, 91, 101);
+        color:rgb(255, 226, 231);
+    }
+    input{
+        display:inline-block;
+    }
+    input[type="text"]:hover{
+        margin-left: 5px;
+        background-color: rgb(248, 192, 202);
+    }
+    .container{
+        border-radius: 2px;
+        background-color: rgb(247, 204, 211);
+        width: 280px;
+        font-size: large;
+    }
+
+</style> 
+
+    <h1>Práctica 24</h1>
+
+    <p>
+        <div class="container">
+            <label> La fecha de hoy: </label> 
+        </div>
+        
+    </p>
+
+    <script>
+        function fecha() {
+            // Obtenemos la fecha actual
+            const fecha = new Date();
+
+            // Traducimos el día de la semana
+            let diaSemana;
+            switch (fecha.getDay()) {
+                case 0: diaSemana = "domingo"; break;
+                case 1: diaSemana = "lunes"; break;
+                case 2: diaSemana = "martes"; break;
+                case 3: diaSemana = "miércoles"; break;
+                case 4: diaSemana = "jueves"; break;
+                case 5: diaSemana = "viernes"; break;
+                case 6: diaSemana = "sábado"; break;
+            }
+
+            // Traducimos el mes
+            let mes;
+            switch (fecha.getMonth()) {
+                case 0: mes = "Enero"; break;
+                case 1: mes = "Febrero"; break;
+                case 2: mes = "Marzo"; break;
+                case 3: mes = "Abril"; break;
+                case 4: mes = "Mayo"; break;
+                case 5: mes = "Junio"; break;
+                case 6: mes = "Julio"; break;
+                case 7: mes = "Agosto"; break;
+                case 8: mes = "Septiembre"; break;
+                case 9: mes = "Octubre"; break;
+                case 10: mes = "Noviembre"; break;
+                case 11: mes = "Diciembre"; break;
+            }
+
+            // Obtenemos el número de día y el año
+            const numDia = fecha.getDate();
+            const anio = fecha.getFullYear();
+
+            // Construimos e imprimimos el mensaje
+            const mensaje = `Hoy es ${diaSemana} ${numDia} de ${mes} del año ${anio}`;
+            alert(mensaje);
+        }
+    </script>
+
+    <p><button onclick="fecha()"> Calcular </button></p>
+</body>
+</html>
