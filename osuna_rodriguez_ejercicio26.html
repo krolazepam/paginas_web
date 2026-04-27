@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 26</title>
+
+</head>
+<body style="background-color: rgb(255, 226, 231)">
+
+<style>
+    p{
+        margin-right: 5px;
+    }
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    button{
+        background-color: rgb(216, 154, 165);
+    }
+    button:hover{
+        background-color: rgb(149, 91, 101);
+        color:rgb(255, 226, 231);
+    }
+    input{
+        display:inline-block;
+    }
+    h3{
+        background-color: rgb(216, 154, 165);
+    }
+    .container{
+        border-radius: 2px;
+        background-color: rgb(216, 154, 165);
+        width: 280px;
+        font-size: large;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #tablas{
+        border-radius: 2px;
+        background-color: rgb(247, 204, 211);
+        width: 200px;
+        font-size: medium;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style> 
+
+    <h1>Práctica 26</h1>
+
+    <p>
+        <div class="container">
+            <label>Ingrese un número entero y positivo para conocer las tablas de multiplicar desde el 1 hasta dicho número: </label> 
+        </div>
+        <p><input id="n" type="text"></p>
+    </p>
+
+    <p id="tablas"></p>
+
+    <script>
+        function generarTablas() {
+            const limite = parseInt(document.getElementById("n").value);
+            const contenedor = document.getElementById("tablas");
+
+            if (isNaN(limite) || limite <= 0) {
+                alert("Por favor, ingresa un número entero positivo.");
+                return;
+            }
+
+            let contenido = ""; 
+
+            for (let i = 1; i <= limite; i++) {
+                contenido += `<h3>Tabla del ${i}</h3>`;
+ 
+                for (let j = 1; j <= 10; j++) {
+                    contenido += `${i} x ${j} = ${i * j} <br>`;
+                }
+                
+                contenido += "<hr>"; 
+            }
+
+            contenedor.innerHTML = contenido;
+        }
+    </script>
+
+    <p><button onclick="generarTablas()"> Generar tablas </button></p>
+</body>
+</html>
