@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crud</title>
+
+  <link href="bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="datatables/datatables.min.css" rel="stylesheet">
+
+  <script src="js/jquery-3.4.1.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="bootstrap-4.3.1/js/bootstrap.min.js"></script>
+  <script src="datatables/datatables.min.js"></script>    
+</head>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      background-color: rgb(255, 226, 231) !important;
+      color: #5a4145; /* Tono café suave */
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 300;
+      padding-top: 30px;
+    }
+
+    /* Caja blanca suave que envuelve la tabla y botones */
+    .container-fluid {
+      background-color: rgb(247, 204, 211) !important;
+      border-radius: 15px;
+      padding: 30px !important;
+      box-shadow: 0 8px 16px rgba(149, 91, 101, 0.1);
+      width: 96% !important; /* Ocupa casi toda la pantalla */
+      max-width: 100% !important;
+      margin: 0 auto !important;
+    }
+
+    /* Personalización de la Tabla */
+    #tablaprestamos {
+      background-color: #ffeef3;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 0.1px solid rgba(216, 154, 165, 0.26) !important;
+      width: 100% !important; /* Fuerza a usar todo el espacio */
+    }
+
+    /* Encabezado de la tabla (Rosa Viejo / Dusty Rose) */
+    #tablaprestamos thead {
+      background-color: rgb(216, 154, 165) !important;
+      color: #ffffff !important;
+    }
+
+    #tablaprestamos thead td {
+      border: none !important;
+      font-weight: 600;
+      text-transform: capitalize;
+      font-size: 1rem;
+      padding: 14px;
+      text-align: center;
+    }
+
+    /* Filas de la tabla */
+    #tablaprestamos tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    #tablaprestamos tbody tr:hover {
+      background-color: rgb(255, 240, 242) !important; /* Hover rosa super clarito */
+    }
+
+    #tablaprestamos tbody td {
+      vertical-align: middle !important;
+      text-align: center;
+      border-color: rgb(255, 226, 231) !important;
+    }
+
+    /* Botón principal (Agregar Préstamo) */
+    #BotonAgregar {
+      background-color: rgb(216, 154, 165) !important;
+      border-color: rgb(216, 154, 165) !important;
+      color: white !important;
+      border-radius: 20px; /* Bordes más redondeados y tiernos */
+      padding: 8px 20px;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(216, 154, 165, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    #BotonAgregar:hover {
+      background-color: rgb(149, 91, 101) !important;
+      color: rgb(255, 226, 231) !important;
+      transform: translateY(-1px);
+    }
+
+    /* Botones de Modificar y Borrar dentro de la tabla */
+    .botonmodificar {
+      background-color: rgb(149, 91, 101) !important; /* Un lila pastel hermoso para modificar */
+      border-color: rgb(149, 91, 101) !important;
+      color: white !important;
+      border-radius: 15px !important;
+    }
+
+    .botonmodificar:hover {
+      background-color: rgb(216, 154, 165) !important;
+    }
+
+    .botonborrar {
+      background-color: rgb(216, 154, 165) !important; /* Mismo rosa viejo */
+      border-color: rgb(216, 154, 165) !important;
+      color: white !important;
+      border-radius: 15px !important;
+    }
+
+    .botonborrar:hover {
+      background-color: rgb(149, 91, 101) !important;
+      color: rgb(255, 226, 231) !important;
+    }
+
+    /* Estilos del Modal (Formulario emergente) */
+    .modal-content {
+      border-radius: 18px !important;
+      border: none !important;
+      box-shadow: 0 10px 30px rgba(149, 91, 101, 0.2) !important;
+      background-color: rgb(255, 240, 242) !important;
+    }
+
+    .modal-header {
+      background-color: rgb(247, 204, 211) !important;
+      color: rgb(149, 91, 101) !important;
+      border-bottom: 2px solid rgb(255, 226, 231) !important;
+      border-top-left-radius: 18px !important;
+      border-top-right-radius: 18px !important;
+    }
+
+    .modal-header .close {
+      color: rgb(149, 91, 101) !important;
+      text-shadow: none !important;
+    }
+
+    .modal-footer {
+      background-color: rgb(255, 226, 231) !important;
+      border-top: 1px solid rgb(247, 204, 211) !important;
+      border-bottom-left-radius: 18px !important;
+      border-bottom-right-radius: 18px !important;
+    }
+
+    /* Botón de Confirmar (Agregar/Modificar) dentro del modal */
+    .modal-footer .btn-success {
+      background-color: rgb(216, 154, 165) !important;
+      border-color: rgb(216, 154, 165) !important;
+      border-radius: 15px !important;
+    }
+
+    .modal-footer .btn-success:hover {
+      background-color: rgb(149, 91, 101) !important;
+      color: rgb(255, 226, 231) !important;
+    }
+
+    .modal-footer .btn-secondary {
+      border-radius: 15px !important;
+    }
+
+    /* Inputs y Campos de Texto */
+    .form-control {
+      border-radius: 10px !important;
+      border: 1px solid rgb(216, 154, 165) !important;
+      padding: 8px !important;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:hover {
+      background-color: rgb(248, 192, 202) !important;
+    }
+
+    .form-control:focus {
+      border-color: rgb(149, 91, 101) !important;
+      box-shadow: 0 0 0 3px rgba(149, 91, 101, 0.15) !important;
+    }
+
+    /* Radio buttons con el acento que elegiste */
+    input[type="radio"] {
+      margin-right: 4px;
+      accent-color: rgb(149, 91, 101) !important; 
+    }
+
+    .modal-body label {
+      font-weight: 600;
+      color: rgb(149, 91, 101);
+    }
+
+    /* Paginación y Buscador de DataTables */
+    .dataTables_length select {
+      border-radius: 8px !important;
+      border: 1px solid rgb(216, 154, 165) !important;
+      padding: 4px 28px 4px 10px !important; /* Espacio para que la flecha y el número no se encimen */
+      background-color: #ffffff !important;
+      height: auto !important;
+      width: auto !important;
+      display: inline-block !important;
+    }
+
+    /* Buscador de DataTables */
+    .dataTables_wrapper .dataTables_filter input {
+      border-radius: 10px !important;
+      border: 1px solid rgb(216, 154, 165) !important;
+      padding: 6px 12px !important;
+      background-color: #ffffff;
+      outline: none;
+    }
+
+    .dataTables_wrapper .dataTables_filter input:hover {
+      background-color: rgb(248, 192, 202);
+    }
+
+    /* Paginación de DataTables (Botones Anterior, 1, Siguiente) */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      border-radius: 8px !important;
+      padding: 6px 12px !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      background: rgb(216, 154, 165) !important;
+      color: white !important;
+      border: 1px solid rgb(216, 154, 165) !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+      background: rgb(149, 91, 101) !important;
+      color: white !important;
+      border: 1px solid rgb(149, 91, 101) !important;
+    }
+
+    .page-link{
+      position: relative;
+      display: block;
+      padding: .5rem .75rem;
+      margin-left: -1px;
+      line-height: 1.25;
+      background-color:rgb(216, 154, 165) !important;
+      color: #fff !important;
+      border: 1px solid rgba(216, 154, 165, 0.362) !important;
+    }
+  </style>
+
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-striped table-bordered table-hover" id="tablaprestamos">
+          <thead>
+            <tr>
+              <td>ID del préstamo</td>
+              <td>Nombre</td>
+              <td>Carrera</td>
+              <td>Grupo</td>
+              <td>Alumno o Profesor</td>
+              <td>Descripción del préstamo</td>
+              <td>Hora del préstamo</td>
+              <td>Hora de entrega</td>
+              <td>Modificar</td>
+              <td>Borrar</td>
+            </tr>
+          </thead>
+        </table>
+        <button class="btn btn-sm btn-primary" id="BotonAgregar">Agregar préstamo</button>
+      </div>
+    </div>
+
+    <!-- Formulario (Agregar, Modificar) -->
+
+    <div class="modal fade" id="FormularioArticulo" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="Codigo">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Nombre:</label>
+                <input type="text" id="nombre" class="form-control" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <p><label>Carrera:</label></p>
+                  <input type="radio" name=""carrera value="Civil" /> <label for="c"> C </label>
+                  <input type="radio" name="carrera" value="Geodesia" /> <label for="g"> G </label>
+                  <input type="radio" name="carrera" value="Software" /> <label for="c"> S </label>
+                  <input type="radio" name="carrera" value="Industrial"/> <label for="c"> IP </label>
+                  <input type="radio" name="carrera" value="Nanotecnologia"/> <label for="in"> IN </label>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Grupo:</label>
+                <input type="text" id="grupo" class="form-control" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <p><label>Alumno o Profesor:</label></p>
+                <input type="radio" name="alumprof" value="Alumno"/> <label for="a"> Alumno </label>
+                <input type="radio" name="alumprof" value="Profesor"/> <label for="p"> Profesor </label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Descripción del préstamo:</label>
+                <input type="text" id="prestamoInfo" class="form-control" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Hora del préstamo:</label>
+                <input type="datetime-local" id="horaPrestamo" class="form-control">
+              </div>
+            </div>    
+            
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Hora de entrega:</label>
+                <input type="datetime-local" id="horaEntrega" class="form-control">
+              </div>
+            </div> 
+
+            <div class="modal-footer">
+              <button type="button" id="ConfirmarAgregar" class="btn btn-success">Agregar</button>
+              <button type="button" id="ConfirmarModificar" class="btn btn-success">Modificar</button>
+              <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        
+        // Configuración de DataTables mapeada exactamente a tus 10 columnas del HTML
+        let tabla1 = $("#tablaprestamos").DataTable({
+          "ajax": {
+            url: "datos.php?accion=listar",
+            dataSrc: ""
+          },
+          "columns": [
+            { "data": "codigo" },       // Columna 0: ID préstamo
+            { "data": "nombre" },       // Columna 1: Nombre
+            { "data": "carrera" },      // Columna 2: Carrera
+            { "data": "grupo" },        // Columna 3: Grupo
+            { "data": "alumprof" },     // Columna 4: Alumno/Profesor
+            { "data": "prestamoInfo" }, // Columna 5: Descripción
+            { "data": "horaPrestamo" }, // Columna 6: Hora Préstamo
+            { "data": "horaEntrega" },  // Columna 7: Hora Entrega
+            { "data": null, "orderable": false }, // Columna 8: Botón Modificar
+            { "data": null, "orderable": false }  // Columna 9: Botón Borrar
+          ],
+          "columnDefs": [
+            {
+              targets: 8,
+              "defaultContent": "<button class='btn btn-sm btn-primary botonmodificar'>Modificar</button>",
+              data: null
+            }, 
+            {
+              targets: 9,
+              "defaultContent": "<button class='btn btn-sm btn-danger botonborrar'>Borrar</button>", // Cambiado a rojo para variar
+              data: null
+            }
+          ],
+          "language": {
+            "url": "datatables/spanish.json", // Corregida la minúscula por si tu carpeta es en minúsculas
+          },
+        });
+
+        // Eventos de botones
+        $('#BotonAgregar').click(function() {
+          $('#ConfirmarAgregar').show();
+          $('#ConfirmarModificar').hide();
+          limpiarFormulario();
+          $("#FormularioArticulo").modal('show');
+        });
+
+        $('#ConfirmarAgregar').click(function() {
+          $("#FormularioArticulo").modal('hide');
+          let registro = recuperarDatosFormulario();
+          agregarRegistro(registro);
+        });
+
+        $('#ConfirmarModificar').click(function() {
+          $("#FormularioArticulo").modal('hide');
+          let registro = recuperarDatosFormulario();
+          modificarRegistro(registro);
+        });
+
+        $('#tablaprestamos tbody').on('click', 'button.botonmodificar', function() {
+          $('#ConfirmarAgregar').hide();
+          $('#ConfirmarModificar').show();
+          let registro = tabla1.row($(this).parents('tr')).data();
+          recuperarRegistro(registro.codigo);
+        });
+
+        $('#tablaprestamos tbody').on('click', 'button.botonborrar', function() {
+          if (confirm("¿Realmente quiere borrar el registro del préstamo?")) {
+            let registro = tabla1.row($(this).parents('tr')).data();
+            borrarRegistro(registro.codigo);
+          }
+        });
+
+        function limpiarFormulario() {
+          $('#Codigo').val('');
+          $('#nombre').val('');
+          $('input[name="carrera"]').prop('checked', false);
+          $('#grupo').val('');
+          $('input[name="alumprof"]').prop('checked', false);
+          $('#prestamoInfo').val('');
+          $('#horaPrestamo').val('');
+          $('#horaEntrega').val('');
+        }
+
+        function recuperarDatosFormulario() {
+          let registro = {
+            codigo: $('#Codigo').val(),
+            nombre: $('#nombre').val(),
+            carrera: $('input[name="carrera"]:checked').val() || '', 
+            grupo: $('#grupo').val(),
+            alumprof: $('input[name="alumprof"]:checked').val() || '',
+            prestamoInfo: $('#prestamoInfo').val(),
+            horaPrestamo: $('#horaPrestamo').val(),
+            horaEntrega: $('#horaEntrega').val()
+          };
+          return registro;
+        }
+
+        // Funciones AJAX de comunicación con el servidor
+        function agregarRegistro(registro) {
+          $.ajax({
+            type: 'POST',
+            url: 'datos.php?accion=agregar',
+            data: registro,
+            success: function(msg) {
+              tabla1.ajax.reload();
+            },
+            error: function() {
+              alert("Hay un problema al agregar");
+            }
+          });
+        }
+
+        function borrarRegistro(codigo) {
+          $.ajax({
+            type: 'GET',
+            url: 'datos.php?accion=borrar&codigo=' + codigo,
+            success: function(msg) {
+              tabla1.ajax.reload();
+            },
+            error: function() {
+              alert("Hay un problema al borrar");
+            }
+          });
+        }
+
+        function recuperarRegistro(codigo) {
+          $.ajax({
+            type: 'GET',
+            url: 'datos.php?accion=consultar&codigo=' + codigo,
+            success: function(datos) {
+              if(datos.length > 0) {
+                $('#Codigo').val(datos[0].codigo);
+                $('#nombre').val(datos[0].nombre);
+                $(`input[name="carrera"][value="${datos[0].carrera}"]`).prop('checked', true);
+                $('#grupo').val(datos[0].grupo);
+                $(`input[name="alumprof"][value="${datos[0].alumprof}"]`).prop('checked', true);
+                $('#prestamoInfo').val(datos[0].prestamoInfo);
+                
+                // Formatear fechas de SQL (YYYY-MM-DD HH:MM:SS) a datetime-local (YYYY-MM-DDTHH:MM)
+                if(datos[0].horaPrestamo) {
+                  $('#horaPrestamo').val(datos[0].horaPrestamo.replace(" ", "T").substring(0, 16));
+                }
+                if(datos[0].horaEntrega) {
+                  $('#horaEntrega').val(datos[0].horaEntrega.replace(" ", "T").substring(0, 16));
+                }
+                
+                $("#FormularioArticulo").modal('show');
+              }
+            },
+            error: function() {
+              alert("Hay un problema al consultar");
+            }
+          });
+        }
+
+        function modificarRegistro(registro) {
+          $.ajax({
+            type: 'POST',
+            url: 'datos.php?accion=modificar&codigo=' + registro.codigo,
+            data: registro,
+            success: function(msg) {
+              tabla1.ajax.reload();
+            },
+            error: function() {
+              alert("Hay un problema al modificar");
+            }
+          });
+        }
+
+      });
+    </script>
+</body>
+</html>
